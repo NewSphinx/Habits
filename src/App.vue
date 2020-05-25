@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <v-app>
+      <router-view />
+    </v-app>
   </div>
 </template>
 
@@ -13,6 +15,7 @@
   color: #2c3e50;
   max-width: 500px;
   margin: auto;
+  position: relative;
 }
 
 #nav {

@@ -22,6 +22,7 @@ import Overview from '@/components/Overview.vue';
 import Strength from '@/components/Strength.vue';
 import History from '@/components/History.vue';
 import Streaks from '@/components/Streaks.vue';
+// eslint-disable-next-line import/no-unresolved
 import Frequency from '@/components/Frequency.vue';
 
 export default {
