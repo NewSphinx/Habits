@@ -2,11 +2,19 @@
   <div class="container mt-4">
     <h4 class="title">Overview</h4>
     <div class="specs">
-      <div>strength</div>
-      <div>Score</div>
-      <div>Month</div>
-      <div>Year</div>
-      <div>Total</div>
+      <v-progress-circular :value="20"></v-progress-circular>
+      <div>
+        <p>20%</p>
+        <p>Month</p>
+      </div>
+      <div>
+        <p>12%</p>
+        <p>Year</p>
+      </div>
+      <div>
+        <p>10</p>
+        <p>Total</p>
+      </div>
     </div>
   </div>
 </template>
@@ -23,7 +31,11 @@
   .specs {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    place-items: center;
+    p {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

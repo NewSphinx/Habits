@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn fab small text @click="flipValue">
-      <v-icon v-if="value">done</v-icon>
+      <v-icon v-if="value" color="blue">done</v-icon>
       <v-icon v-else>clear</v-icon>
     </v-btn>
     <!-- <button @click="flipTheme">Change theme</button> -->
