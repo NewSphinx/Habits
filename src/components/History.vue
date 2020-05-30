@@ -6,7 +6,7 @@
       <!-- <div v-for="(day, index) in items" :key="index" class="day"> -->
       <div
         :class="[day.value ? 'cell filled' : 'cell empty']"
-        v-for="(day, index) in items"
+        v-for="(day, index) in localItems"
         :key="index"
         class="day"
       ></div>
@@ -18,23 +18,30 @@
 
 <script>
 // import { getDaysInMonth, format } from 'date-fns';
+import { mapGetters } from 'vuex';
 
 export default {
+  data() {
+    return {
+      localItems: [],
+    };
+  },
   computed: {
-    items() {
-      return this.$store.state.items[0].data;
-    },
+    ...mapGetters({
+      items: 'getAllItems',
+    }),
   },
   methods: {
     add100Dummy() {
       for (let i = 0; i < 101; i += 1) {
-        this.items.push({
+        this.localItems.push({
           value: false,
         });
       }
     },
   },
-  created() {
+  mounted() {
+    this.localItems = JSON.parse(JSON.stringify(this.items));
     this.add100Dummy();
     this.add100Dummy();
     this.add100Dummy();

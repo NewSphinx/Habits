@@ -89,15 +89,15 @@
           <tr>
             <th class="text-left">Name</th>
             <th class="text-left" v-for="(item, index) in items[0].data" :key="index">
-              {{ item.date }}
+              {{ item.date | titleDate }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in items" :key="item.name">
-            <td>
+          <tr v-for="(item, index) in items" :key="item.name">
+            <td @click="setindex(index)">
               <router-link :to="{ name: 'item', params: { name: item.name } }">
-                {{ item.name }}
+                {{ item.name }} fsa
               </router-link>
             </td>
             <td v-for="(date, index) in item.data" :key="index" class="pa-0">
@@ -112,6 +112,8 @@
 
 <script>
 import Tick from '@/components/Tick.vue';
+import { mapGetters } from 'vuex';
+import { getDate } from 'date-fns';
 
 export default {
   data() {
@@ -127,14 +129,21 @@ export default {
     Tick,
   },
   computed: {
-    items() {
-      console.log(this.$store.state);
-      return this.$store.state.items;
+    ...mapGetters({
+      items: 'getAllItems',
+    }),
+  },
+  methods: {
+    setindex(i) {
+      this.$store.dispatch('setSelectedIndex', i);
     },
   },
-  // created() {
-  //   this.$store.dispatch('fillTestData');
-  // },
+  filters: {
+    titleDate(value) {
+      if (!value) return '';
+      return getDate(value);
+    },
+  },
 };
 </script>
 
