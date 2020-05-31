@@ -34,19 +34,15 @@
 <script>
 import { mapGetters } from 'vuex';
 
+// eslint-disable-next-line object-curly-newline
 import {
-  // eslint-disable-next-line no-unused-vars
-  getDaysInMonth,
-  // eslint-disable-next-line no-unused-vars
-  getDaysInYear,
+  startOfMonth,
   startOfYear,
-  // eslint-disable-next-line no-unused-vars
-  getMonth,
   isSameMonth,
   isSameYear,
-  startOfMonth,
   lastDayOfMonth,
   differenceInDays,
+  // eslint-disable-next-line object-curly-newline
 } from 'date-fns';
 
 export default {
@@ -65,8 +61,8 @@ export default {
       items: 'getByIndex',
     }),
   },
-  watch: {
-    items() {
+  methods: {
+    setValues() {
       const currentTime = new Date();
       const daysElapsedThisMonth = differenceInDays(currentTime, startOfMonth(currentTime));
       let completedThisMonth = 0;
@@ -84,14 +80,14 @@ export default {
       );
       this.items.data.map((item) => {
         if (item.value) {
-          if (isSameMonth(item.date, currentTime)) {
-            completedThisMonth += 1;
-          }
-          if (isSameMonth(item.date, prevMonthDate)) {
-            completedPrevMonth += 1;
-          }
           if (isSameYear(item.date, currentTime)) {
             completedThisYear += 1;
+            if (isSameMonth(item.date, currentTime)) {
+              completedThisMonth += 1;
+            }
+            if (isSameMonth(item.date, prevMonthDate)) {
+              completedPrevMonth += 1;
+            }
           }
           totalCompleted += 1;
         }
@@ -105,15 +101,30 @@ export default {
             : Math.floor((completedPrevMonth / prevMonthDays) * 100);
       }
       this.score = Math.floor((completedThisMonth / daysElapsedThisMonth) * 100);
-      this.monthly = Math.floor(this.score / prevMonthScore);
+      if (this.score > prevMonthScore) {
+        this.monthly = Math.floor(this.score / prevMonthScore);
+        this.up = 'green';
+      } else {
+        this.monthly = Math.floor(prevMonthScore / this.score);
+        this.up = 'red';
+      }
+
       this.yearly = Math.floor(
         (completedThisYear / differenceInDays(currentTime, startOfYear(currentTime))) * 100,
       );
       this.total = totalCompleted;
     },
   },
-  methods: {},
-  created() {},
+  watch: {
+    items() {
+      this.setValues();
+    },
+  },
+  mounted() {
+    if (this.items) {
+      this.setValues();
+    }
+  },
 };
 </script>
 <style scoped lang="scss">

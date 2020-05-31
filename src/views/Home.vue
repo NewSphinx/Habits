@@ -97,7 +97,7 @@
           <tr v-for="(item, index) in items" :key="item.name">
             <td @click="setindex(index)">
               <router-link :to="{ name: 'item', params: { name: item.name } }">
-                {{ item.name }} fsa
+                {{ item.name }}
               </router-link>
             </td>
             <td v-for="(date, index) in item.data" :key="index" class="pa-0">
